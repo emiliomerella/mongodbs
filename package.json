@@ -1,0 +1,25 @@
+{
+  "name": "mongo-express-request",
+  "version": "0.2.0",
+  "description": "Add a mongo db connection into a express request",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/bufoxteam/mongo-express-request.git"
+  },
+  "keywords": [
+    "mongodb",
+    "connection",
+    "express",
+    "request"
+  ],
+  "author": "Emilio Merella",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/bufoxteam/mongo-express-request/issues"
+  },
+  "homepage": "https://gitlab.com/bufoxteam/mongo-express-request#README"
+}
