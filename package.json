@@ -24,6 +24,7 @@
   "homepage": "https://gitlab.com/bufoxteam/mongo-express-request#README",
   "dependencies": {
     "assert": "^1.4.1",
+    "async": "^2.6.0",
     "mongodb": "^3.0.4"
   }
 }
