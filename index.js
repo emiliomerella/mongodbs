@@ -1,42 +1,41 @@
 const mongod = require('mongodb');
 
-function buildUrl(conf) {
-  console.log('buildUrl');
-  Promise.resolve(`mongodb://${conf.dbUrl}`);
+const buildUrl = (conf) => {
+  conf.dbUrl = `mongodb://${conf.dbUrl}`;
+  return Promise.resolve(conf);
 }
 
-function checkConfiguration(conf) {
-  console.log('checkConfiguration');
+const checkConfiguration = (conf) => {
+  if ('object' !== typeof conf) {
+    return Promise.reject('configuration is not an Object!');
+  }
   if (!conf.dbName) {
-    return Promise.reject('dbName not found in configuration!')
+    return Promise.reject('dbName not found in configuration!');
   }
   if ('string' !== typeof conf.dbName) {
-    return Promise.reject('dbName has to be of string type!')
+    return Promise.reject('dbName has to be of string type!');
   }
   if (!conf.dbUrl) {
-    return Promise.reject('dbUrl not found in configuration!')
+    return Promise.reject('dbUrl not found in configuration!');
   }
   if ('string' !== typeof conf.dbUrl) {
-    return Promise.reject('dbUrl has to be of string type!')
+    return Promise.reject('dbUrl has to be of string type!');
   }
   return Promise.resolve(conf);
 }
 
-function createConnection(url) {
-  console.log('createConnection');
-  mongod.MongoClient.connect(connectionUrl)
-  .then(client => client.db(`${db}`));
-}
+const createConnection = (conf) =>
+  mongod.MongoClient.connect(conf.dbUrl)
+  .then(client => client.db(`${conf.dbName}`));
 
-module.exports.connect = (conf) => {
+module.exports.connect = (conf) =>
   checkConfiguration(conf)
   .then(buildUrl)
   .then(createConnection)
   .catch(err => new Error(err));
-};
 
 module.exports.use = (db) => (req, res, next) => {
   if (!req.dbs) { req.dbs = {} }
-  req.dbs[dbName] = db;
+  req.dbs[db.databaseName] = db;
   return next();
 };
