@@ -1,6 +1,6 @@
 {
   "name": "mongo-express-request",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Add a mongo db connection into a express request",
   "main": "index.js",
   "scripts": {
