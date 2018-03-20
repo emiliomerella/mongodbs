@@ -1,0 +1,13 @@
+{
+  env: {
+    jest: true
+  },
+  extends: "airbnb",
+  rules: {
+    indent: [2, 2, { MemberExpression: 0 }],
+    "max-len": [2, { "code": 120, "tabWidth": 2, "ignoreUrls": true, "comments": 160 }],
+    "no-console": "off",
+    "no-underscore-dangle": "off",
+    "no-use-before-define": "off"
+  }
+}
