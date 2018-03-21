@@ -1,4 +1,4 @@
-# nomgodbs
+# mongodbs
 
 This module allows your server to connect to multiple mongodb databases.
 Current features are:
@@ -7,8 +7,6 @@ Current features are:
 * put database instance(s) into the express request
 
 Database instance(s) will be available in req.dbs[dbName]
-
-**WIP**
 
 ## Dependencies
 
