@@ -1,14 +1,14 @@
 {
-  "name": "mongo-express-request",
+  "name": "mongodbs",
   "version": "0.4.1",
-  "description": "Add a mongo db connection into a express request",
+  "description": "Add multiple mongo db connections into a express request",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitlab.com/bufoxteam/mongo-express-request.git"
+    "url": "git+ssh://git@github.com:emiliomerella/mongodbs.git"
   },
   "keywords": [
     "mongodb",
@@ -19,9 +19,9 @@
   "author": "Emilio Merella",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitlab.com/bufoxteam/mongo-express-request/issues"
+    "url": "https://github.com/emiliomerella/mongodbs/issues"
   },
-  "homepage": "https://gitlab.com/bufoxteam/mongo-express-request#README",
+  "homepage": "https://https://github.com/emiliomerella/mongodbs",
   "dependencies": {
     "assert": "^1.4.1",
     "async": "^2.6.0",
