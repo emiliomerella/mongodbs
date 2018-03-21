@@ -11,7 +11,6 @@ Database instance(s) will be available in req.dbs[dbName]
 ## Dependencies
 
 * mongodb
-* async
 * assert
 
 ## How to use the module (soon available)
@@ -82,6 +81,5 @@ app.get('/', (req, res, next) => {
 ## Roadmap
 
 * support mongodb connection options
-* support full async/await features (ESNext)
 * CRUD operations facilities
 * response outware

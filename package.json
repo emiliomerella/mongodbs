@@ -25,7 +25,6 @@
   "homepage": "https://https://github.com/emiliomerella/mongodbs",
   "dependencies": {
     "assert": "^1.4.1",
-    "async": "^2.6.0",
     "mongodb": "^3.0.4"
   },
   "devDependencies": {
