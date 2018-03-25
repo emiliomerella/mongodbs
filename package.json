@@ -18,7 +18,7 @@
     "request"
   ],
   "author": "Emilio Merella",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/emiliomerella/mongodbs/issues"
   },
