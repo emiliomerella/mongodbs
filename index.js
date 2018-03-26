@@ -7,3 +7,19 @@ const _package = {
 };
 
 module.exports = _package;
+
+module.exports = async (configuration) => {
+  try {
+    const conf = configuration;
+    const dbs = await connect(conf);
+    const middleware = () => use(dbs);
+    
+    return {
+      conf,
+      dbs,
+      middleware,
+    };
+  } catch (e) {
+    return e;
+  }
+};
