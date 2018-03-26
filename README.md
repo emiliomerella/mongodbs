@@ -13,7 +13,7 @@ Database instance(s) will be available in req.dbs[dbName]
 * mongodb
 * assert
 
-## How to use the module (soon available)
+## How to use the module
 
 Install
 
