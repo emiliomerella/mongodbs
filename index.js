@@ -1,25 +1,23 @@
 const connect = require('./lib/connect');
-const use = require('./lib/use');
+const begin = require('./lib/beginware');
+const out = require('./lib/outware');
 
-const _package = {
-  connect,
-  use,
-};
+module.exports = (app, configuration) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const conf = configuration;
+      const dbs = await connect(conf);
+      app.use(begin(dbs));
 
-module.exports = _package;
+      return resolve(dbs);
+    } catch (e) {
+      return reject(e);
+    }
+  });
 
-module.exports = async (configuration) => {
-  try {
-    const conf = configuration;
-    const dbs = await connect(conf);
-    const middleware = () => use(dbs);
-    
-    return {
-      conf,
-      dbs,
-      middleware,
-    };
-  } catch (e) {
-    return e;
-  }
-};
+
+module.exports.response = () => out();
+
+// TODO: to be deprecated
+module.exports.connect = connect;
+module.exports.use = begin;
