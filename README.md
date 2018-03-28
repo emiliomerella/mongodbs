@@ -8,12 +8,12 @@ Current features are:
 
 Database instance(s) will be available in req.dbs[dbName]
 
-## Dependencies
+### Dependencies
 
 * mongodb
 * assert
 
-## How to use the module
+### How to use the module
 
 Install
 
@@ -39,7 +39,7 @@ Import in your server main file
 
 ```
 const express = require('express');
-const mongodbs = require('mongodbs');
+const mongo = require('mongodbs');
 ...
 ```
 
@@ -47,8 +47,7 @@ Initialize and use as middleware
 
 ```
 const app = express();
-const dbs = await mongodbs.connect('/path/to/conf.json');
-app.use(mongodbs.use(dbs));
+const mongodbs = await mongo(app, '/path/to/conf.json');
 ...
 const port = 8080; // your port for this server
 app.listen(port, () => console.log(`my awesome server is listening on port ${port}`));
@@ -58,9 +57,8 @@ or
 
 ```
 const app = express();
-mongodbs.connect('/path/to/conf.json')
-.then(dbs => {  
-  app.use(mongodbs.use(dbs));
+mongo('/path/to/conf.json')
+.then(mongodbs => {  
   ...
   const port = 8080; // your port for this server
   app.listen(port, () => console.log(`my awesome server is listening on port ${port}`));
@@ -74,12 +72,43 @@ app.get('/', (req, res, next) => {
   const db = req.dbs.myMongoDB;
   const coll = db.collection('myCollection');
 
-  // [here you can perform mongodb CRUD operations as usual]
+  // here you can perform mongodb CRUD operations as usual
 });
 ```
 
-## Roadmap
+You can also use the response outware by adding it as the latest middleware in the route...
+
+```
+const myController = require('/path/to/myController');
+const outware = require('mongodbs').response;
+
+app.get('/', myController, outware);
+```
+
+... and adding a `mongoResponse` object to the `res` express object
+
+```
+const myController = (req, res, next) => {
+  // do stuffs
+  res.mongoResponse = {
+    statusCode: 200,
+    data: { ... }
+  };
+  next();
+};
+```
+
+The outware will send the response back to the client.
+
+### Roadmap
 
 * support mongodb connection options
 * CRUD operations facilities
-* response outware
+
+### Changelog
+
+##### v0.5.0
+
+* Added the possibility to use **mongodbs** by passing your `app` express and a json configuration file. This behaviour is the same as what you would obtain by the calls to `connect` an `use` in sequence (*v0.4*).
+* Added response outware.
+* `connect` and `use` methods are not deprecated yet.
