@@ -23,8 +23,8 @@ npm install --save mongodbs
 
 Create a /path/to/conf.json configuration file like the following
 
+###### conf.json
 ```
-conf.json
 
 [
   {
@@ -35,20 +35,18 @@ conf.json
 ]
 ```
 
-Import in your server main file
+Import in your server main file and initialize it
 
+###### index.js
 ```
 const express = require('express');
 const mongo = require('mongodbs');
 ...
-```
 
-Initialize and use as middleware
-
-```
 const app = express();
 const mongodbs = await mongo(app, '/path/to/conf.json');
 ...
+
 const port = 8080; // your port for this server
 app.listen(port, () => console.log(`my awesome server is listening on port ${port}`));
 ```
@@ -57,7 +55,7 @@ or
 
 ```
 const app = express();
-mongo('/path/to/conf.json')
+mongo(app, '/path/to/conf.json')
 .then(mongodbs => {  
   ...
   const port = 8080; // your port for this server
@@ -67,6 +65,7 @@ mongo('/path/to/conf.json')
 
 Then in your routes you'll have
 
+###### myRoute.js
 ```
 app.get('/', (req, res, next) => {
   const db = req.dbs.myMongoDB;
@@ -76,17 +75,19 @@ app.get('/', (req, res, next) => {
 });
 ```
 
-You can also use the response outware by adding it as the latest middleware in the route...
+You can also use the response outware by adding it as the latest middleware of the app, and adding a `mongoResponse` object to the `res` express object
 
+###### index.js
 ```
-const myController = require('/path/to/myController');
-const outware = require('mongodbs').response;
+const app = express();
+...
+app.use(mongo.response());
 
-app.get('/', myController, outware);
+const port = 8080; // your port for this server
+app.listen(port, () => console.log(`my awesome server is listening on port ${port}`));
 ```
 
-... and adding a `mongoResponse` object to the `res` express object
-
+###### myController.js
 ```
 const myController = (req, res, next) => {
   // do stuffs
