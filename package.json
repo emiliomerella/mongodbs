@@ -22,7 +22,7 @@
   "bugs": {
     "url": "https://github.com/emiliomerella/mongodbs/issues"
   },
-  "homepage": "https://https://github.com/emiliomerella/mongodbs",
+  "homepage": "https://github.com/emiliomerella/mongodbs",
   "dependencies": {
     "assert": "^1.4.1",
     "mongodb": "^3.0.4"
