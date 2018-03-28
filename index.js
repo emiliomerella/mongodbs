@@ -16,7 +16,7 @@ module.exports = (app, configuration) =>
   });
 
 
-module.exports.response = () => out();
+module.exports.response = out;
 
 // TODO: to be deprecated
 module.exports.connect = connect;
