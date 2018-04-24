@@ -1,6 +1,6 @@
 {
   "name": "mongodbs",
-  "version": "0.5.1",
+  "version": "1.0.0",
   "description": "Add multiple mongo db connections into a express request",
   "main": "index.js",
   "scripts": {
