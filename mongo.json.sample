@@ -1,0 +1,29 @@
+[
+  {
+    "dbName": "mongoDatabase",
+    "dbUrl": "localhost:27017/",
+    "models": {
+      "items": {
+        "findOne": {
+          "_id": "_id"
+        },
+        "find": {
+          "name": "name",
+          "category": "cat",
+          "value": {
+            "$gte": "val"
+          }
+        },
+        "update": {
+          "_id": "_id",
+          "name": "name"
+        },
+        "insert": {},
+        "delete": {
+          "_id": "_id",
+          "name": "name"
+        }
+      }
+    }
+  }
+]
