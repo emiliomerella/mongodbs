@@ -97,7 +97,7 @@ describe('insert items on db', () => {
       category: 'test',
     };
 
-    dbs.mongoDatabase.models.items.insert(data)
+    dbs.mongoDatabase.models.items.insertOne(data)
     .then((result) => {
       expect(result.result).toEqual({ n: 1, ok: 1 });
       done();
@@ -105,17 +105,24 @@ describe('insert items on db', () => {
     .catch(e => done(e));
   });
 
-  test('insert item should add a doc into the `items` collection', (done) => {
+  test('insert item should add multiple docs into the `items` collection', (done) => {
     const dbs = dbsMock();
-    const data = {
-      _id: '456',
-      name: 'fools',
-      category: 'test',
-    };
+    const data = [
+      {
+        _id: '456',
+        name: 'fools',
+        category: 'test',
+      },
+      {
+        _id: '789',
+        name: 'fools',
+        category: 'tests',
+      },
+    ];
 
     dbs.mongoDatabase.models.items.insert(data)
     .then((result) => {
-      expect(result.result).toEqual({ n: 1, ok: 1 });
+      expect(result.result).toEqual({ n: 2, ok: 1 });
       done();
     })
     .catch(e => done(e));
@@ -139,6 +146,7 @@ describe('insert items on db', () => {
     dbs.mongoDatabase.models.items.findByName('foo')
     .then((item) => {
       expect(item).toEqual(expect.any(Array));
+      expect(item.length).toBe(1);
       expect(item[0]).toEqual(expect.any(Object));
       expect(item[0].name).toBe('foo');
 
@@ -148,13 +156,13 @@ describe('insert items on db', () => {
 });
 
 describe('update items on db', () => {
-  test('update items by _id should modify a doc in the `items` collection', (done) => {
+  test('update item by _id should modify a doc in the `items` collection', (done) => {
     const dbs = dbsMock();
     const data = {
       name: 'fooDoc',
     };
 
-    dbs.mongoDatabase.models.items.updateById('123', data)
+    dbs.mongoDatabase.models.items.updateOneById('123', data)
     .then((result) => {
       expect(result.result).toEqual({ n: 1, nModified: 1, ok: 1 });
       done();
@@ -162,7 +170,7 @@ describe('update items on db', () => {
     .catch(e => done(e));
   });
 
-  test('search for `_id` should return an Object', (done) => {
+  test('search for `_id` should return an Object with name equals to `fooDoc`', (done) => {
     const dbs = dbsMock();
 
     dbs.mongoDatabase.models.items.findOneById('123')
@@ -180,6 +188,7 @@ describe('update items on db', () => {
     dbs.mongoDatabase.models.items.findByName('fooDoc')
     .then((item) => {
       expect(item).toEqual(expect.any(Array));
+      expect(item.length).toBe(1);
       expect(item[0]).toEqual(expect.any(Object));
       expect(item[0]._id).toBe('123');
 
@@ -189,10 +198,10 @@ describe('update items on db', () => {
 });
 
 describe('delete items from db', () => {
-  test('delete items by `_id` (\'123\') should delete a doc from the `items` collection', (done) => {
+  test('delete item by `_id` (\'123\') should delete a doc from the `items` collection', (done) => {
     const dbs = dbsMock();
 
-    dbs.mongoDatabase.models.items.deleteById('123')
+    dbs.mongoDatabase.models.items.deleteOneById('123')
     .then((result) => {
       expect(result.result).toEqual({ n: 1, ok: 1 });
       done();
@@ -216,7 +225,7 @@ describe('delete items from db', () => {
 
     dbs.mongoDatabase.models.items.deleteByName('fools')
     .then((result) => {
-      expect(result.result).toEqual({ n: 1, ok: 1 });
+      expect(result.result).toEqual({ n: 2, ok: 1 });
       done();
     })
     .catch(e => done(e));
