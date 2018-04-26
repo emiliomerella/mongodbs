@@ -25,7 +25,6 @@ npm install --save mongodbs
 ```
 
 Create a /path/to/conf.json configuration file like the following.<br>
-(_conf.json.sample in the source repo is an example of this_)
 
 ###### <a id="conf"></a>conf.json
 ```
@@ -33,7 +32,10 @@ Create a /path/to/conf.json configuration file like the following.<br>
 [
   {
     "dbName": "myMongoDB",
-    "dbUrl": "localhost:27017/",
+    "dbHost": "localhost:27017/",
+    "dbOptions": {
+      poolSize: 10
+    },
     "models": {
       "items": {
         "findOne": {
@@ -43,13 +45,18 @@ Create a /path/to/conf.json configuration file like the following.<br>
           "name": "name",
           "category": "cat"
         },
-        "update": {
+        "updateOne": {
           "_id": "_id",
+        },
+        "update": {
           "name": "name"
         },
         "insert": {},
-        "delete": {
+        "insertOne": {},
+        "deleteOne": {
           "_id": "_id",
+        },
+        "delete": {
           "name": "name"
         }
       }
@@ -58,6 +65,11 @@ Create a /path/to/conf.json configuration file like the following.<br>
   ...
 ]
 ```
+For a detailed explanation of conf params, please see the sections [Configuration details](#conf_det) and [Methods Facility](#facility) below.<br>
+Have a look at the json.sample files, you'll find examples of valid configurations
+* **mongo.json.sample**
+* **mongo-replicaSet.json.sample**
+* **mongo-shards.json.sample**
 
 ### Setup
 
@@ -69,7 +81,7 @@ const express = require('express');
 const mongo = require('mongodbs');
 ...
 
-// you can also set some options (see options.json.sample as reference)
+// you can set some options (see options.json.sample as reference)
 const options = {
   ...
 };
@@ -133,6 +145,18 @@ app.get('/', myController, out);
 
 The `out` middleware will send the response back to the client.
 
+### <a id="conf_det"></a>Configuration details
+
+Here is the list of valid configuration parameters:
+* dbName (_String_) &ndash; the name of database you'll be connected to
+* dbHost (_String_ or _Array_) &ndash; the host(s) your mongo instance is running on<br>
+Notes:
+ * a connection string must follow the rules of official mongodb (see [mongodb - URI Connection Settings](http://mongodb.github.io/node-mongodb-native/3.0/reference/connecting/connection-settings/) for details)
+ * if you set an array of hosts, the **replicaSet** param must be set as well
+* replicaSet (_String_) &ndash; the replicaSet name for your mongo connection
+* dbOptions (_Object_) &ndash; the options for your mongo connection (see [mongodb - URI Connection Settings](http://mongodb.github.io/node-mongodb-native/3.0/reference/connecting/connection-settings/) for details)
+* models (_Object_) &ndash; the configuration for methods facility (see next section for details)
+
 ### <a id="facility"></a>Methods Facility
 
 The module takes your models settings from the _conf.json_ file.<br>
@@ -152,16 +176,16 @@ This is the reference of a "models" entry.
 where
 * **collection** represents the collection in your DB you'll be querying with the created methods<br>
 * **method** is one of the CRUD operations<br>
-_Permitted values here are: **delete**, **find**, **findOne**, **insert** and **update**<br>(Each one does what you expect it does)_
+_Permitted values here are: **delete**, **deleteOne**, **find**, **findOne**, **insert**, **insertOne**, **update** and **updateOne**<br>(Each one does what you expect it does)_
 * **name** is the value used for the method named
 * **field** is the field name you would to query for in the collection
 
-you will find the generate method like the following<br>
+you'll find the generated methods like the following<br>
 _dbs.databaseName.models.collection.methodName_
 
 Note that:
 * a method not permitted will be ignored
-* the `method + name` formula will be camel-cased
+* the `method + name` formula will be camel-cased (_**findOne** + **_id** becomes **findOneById**_)
 * any value for the **insert** method will be ignored (_current version_)
 
 #### Example
@@ -169,15 +193,22 @@ Given the [conf.json](#conf) above you'll have these methods:
 * findOneById
 * findByName
 * findByCategory
-* updateById
+* updateOneById
 * updateByName
 * insert
-* deleteById
+* insertOne
+* deleteOneById
 * deleteByName
 
-For example in your app you can use these facilities by doing like this
+Note that:
+* insert and insertOne methods differs for args they expect to receive<br>
+insert expect ad array of multiple object, insertOne a single object.
+
+
+For example in your app you can use these facilities by doing this
 ```
 const out = require('mongodbs').response;
+
 const myController = (req, res, next) => {
   try {
     const items = await req.dbs.myMongoDB.models.items.findByName(req.params.name);
@@ -194,12 +225,16 @@ const myController = (req, res, next) => {
 app.get('/items/:name', myController, out);
 ```
 
+### Tests
+
+By default the only enabled test is for the models methods facility.<br>
+You can edit the `package.json` file to enable the tests for replicaSet and shards. In this case be sure your mongo servers are configured and running accordingly with **mongo-replicaSet.json.sample** and **mongo-shards.json.sample** files.
+
 ### Roadmap
 
-* support mongodb connection options (..., replicaSet, sharding)
 * CRUD combined operations
 * aggregations
-* stream operations
+* cursors facility
 
 ### Changelog
 
