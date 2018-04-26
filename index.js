@@ -31,7 +31,3 @@ module.exports = (app, configuration, options) =>
 
 
 module.exports.response = out;
-
-// TODO: to be deprecated
-module.exports.connect = connect;
-module.exports.use = begin;
