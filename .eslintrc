@@ -5,6 +5,7 @@
     "max-len": [2, { "code": 120, "tabWidth": 2, "ignoreUrls": true, "comments": 160 }],
     "no-await-in-loop": "off",
     "no-console": "off",
+    "no-multi-str": "off",
     "no-param-reassign": "off",
     "no-restricted-syntax": "off",
     "no-underscore-dangle": "off",

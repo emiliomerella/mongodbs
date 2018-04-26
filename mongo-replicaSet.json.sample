@@ -1,0 +1,30 @@
+[
+  {
+    "dbName": "mongoReplica1",
+    "dbHost": [
+      "localhost:27019",
+      "localhost:27018"
+    ],
+    "replicaSet": "rs1",
+    "models": {
+      "items": {
+        "findOne": {
+          "_id": "_id"
+        },
+        "insert": {}
+      }
+    }
+  },
+  {
+    "dbName": "mongoReplica2",
+    "dbHost": "localhost:27019,localhost:27018/?replicaSet=rs1",
+    "models": {
+      "items": {
+        "findOne": {
+          "_id": "_id"
+        },
+        "insert": {}
+      }
+    }
+  }
+]

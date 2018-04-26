@@ -1,7 +1,7 @@
 [
   {
     "dbName": "mongoDatabase",
-    "dbUrl": "localhost:27017/",
+    "dbHost": "localhost:27017/",
     "models": {
       "items": {
         "findOne": {
@@ -9,18 +9,20 @@
         },
         "find": {
           "name": "name",
-          "category": "cat",
-          "value": {
-            "$gte": "val"
-          }
+          "category": "cat"
+        },
+        "updateOne": {
+          "_id": "_id"
         },
         "update": {
-          "_id": "_id",
           "name": "name"
         },
+        "insertOne": {},
         "insert": {},
+        "deleteOne": {
+          "_id": "_id"
+        },
         "delete": {
-          "_id": "_id",
           "name": "name"
         }
       }
