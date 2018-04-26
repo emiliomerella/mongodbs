@@ -238,6 +238,12 @@ You can edit the `package.json` file to enable the tests for replicaSet and shar
 
 ### Changelog
 
+##### v1.1.0
+
+* Add support for replicaSet
+* Add support for sharding
+* Add support for mongo connect options
+
 ##### v1.0.0
 
 * Created facility methods to perform basic CRUD operations over the database.
