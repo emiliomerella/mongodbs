@@ -1,0 +1,16 @@
+[
+  {
+    "dbName": "mongoShard",
+    "dbHost": [
+      "localhost:27021"
+    ],
+    "models": {
+      "items": {
+        "findOne": {
+          "_id": "_id"
+        },
+        "insert": {}
+      }
+    }
+  }
+]

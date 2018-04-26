@@ -4,8 +4,8 @@
   "description": "Add multiple mongo db connections into a express request",
   "main": "index.js",
   "scripts": {
-    "test": "jest ./test",
-    "watch": "jest ./test --watch"
+    "test": "jest ./test --verbose",
+    "watch": "jest ./test --watch --verbose"
   },
   "repository": {
     "type": "git",
@@ -18,6 +18,13 @@
     "express",
     "request"
   ],
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/test/replicaSet.spec.js",
+      "/test/shards.spec.js"
+    ]
+  },
   "author": "Emilio Merella",
   "license": "MIT",
   "bugs": {
